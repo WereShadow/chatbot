@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chatbot — Powered by LangChain & OpenAI</title>
+  <meta name="description" content="A stateless AI chatbot built with LangChain and OpenAI GPT-4o. Ask anything and get intelligent responses instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- Background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="logo-text">NexusAI</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-content">
+        <button class="new-chat-btn" id="newChatBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          New Chat
+        </button>
+
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <div class="info-card-text">
+            <strong>No Memory Mode</strong>
+            <p>Each message is independent. The AI doesn't remember previous conversations.</p>
+          </div>
+        </div>
+
+        <div class="model-info">
+          <span class="model-badge">
+            <span class="model-dot"></span>
+            GPT-4o Mini
+          </span>
+          <span class="model-sub">LangChain Pipeline</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="footer-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Stateless &amp; Secure
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <main class="chat-main" id="chatMain">
+      <!-- Top bar -->
+      <header class="chat-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="header-title">
+          <h1>AI Assistant</h1>
+          <div class="status-indicator">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Ready</span>
+          </div>
+        </div>
+        <button class="clear-btn" id="clearBtn" title="Clear chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3,6 5,6 21,6"/>
+            <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Messages area -->
+      <section class="messages-area" id="messagesArea" aria-live="polite" aria-label="Chat messages">
+        <!-- Welcome state -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <div class="welcome-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h2>Start a Conversation</h2>
+          <p>Ask me anything — I'm powered by LangChain &amp; GPT-4o Mini</p>
+          <div class="suggestion-grid">
+            <button class="suggestion-chip" data-msg="Explain quantum computing in simple terms" id="suggestion1">
+              <span>🔬</span> Explain quantum computing
+            </button>
+            <button class="suggestion-chip" data-msg="Write a Python function to sort a list of dictionaries by a key" id="suggestion2">
+              <span>🐍</span> Python sorting function
+            </button>
+            <button class="suggestion-chip" data-msg="What are the best practices for REST API design?" id="suggestion3">
+              <span>🌐</span> REST API best practices
+            </button>
+            <button class="suggestion-chip" data-msg="Give me 5 creative ideas for a mobile app" id="suggestion4">
+              <span>💡</span> Creative app ideas
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat messages injected here -->
+        <div class="messages-list" id="messagesList"></div>
+      </section>
+
+      <!-- Input area -->
+      <footer class="input-area">
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            class="chat-input"
+            placeholder="Message NexusAI..."
+            rows="1"
+            aria-label="Type your message"
+            maxlength="4000"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" aria-label="Send message" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22,2 15,22 11,13 2,9"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">No memory — each message is independent · Press <kbd>Enter</kbd> to send</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
