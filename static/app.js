@@ -300,13 +300,20 @@ async function sendMessage() {
 
     const data = await response.json();
     appendMessage('ai', data.response);
+
+    // Show token usage in footer hint
+    if (data.tokens_used) {
+      const tc = document.getElementById('tokenCount');
+      if (tc) tc.textContent = `⚡ ${data.tokens_used} tokens`;
+    }
+
     setStatus('ready');
 
   } catch (err) {
     removeThinking();
     setStatus('error');
     showError(`⚠️ ${err.message}`);
-    appendMessage('ai', `Sorry, I encountered an error: **${err.message}**\n\nPlease check your API key in the \`.env\` file and try again.`);
+    appendMessage('ai', `Sorry, I encountered an error: **${err.message}**\n\nPlease check your Groq API key in the \`.env\` file and try again.\n\nGet a free key at: https://console.groq.com`);
     setTimeout(() => setStatus('ready'), 3000);
   } finally {
     isLoading = false;

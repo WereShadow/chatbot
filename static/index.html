@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Chatbot — Powered by LangChain & OpenAI</title>
-  <meta name="description" content="A stateless AI chatbot built with LangChain and OpenAI GPT-4o. Ask anything and get intelligent responses instantly." />
+  <title>AI Chatbot — Powered by LangChain & Groq</title>
+  <meta name="description" content="A stateless AI chatbot built with LangChain and Groq (Llama 3.3 70B). Ultra-fast inference — ask anything and get intelligent responses instantly." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -65,9 +65,9 @@
         <div class="model-info">
           <span class="model-badge">
             <span class="model-dot"></span>
-            GPT-4o Mini
+            Llama 3.3 70B
           </span>
-          <span class="model-sub">LangChain Pipeline</span>
+          <span class="model-sub">Groq · LangChain Pipeline</span>
         </div>
       </div>
 
@@ -117,7 +117,7 @@
             </svg>
           </div>
           <h2>Start a Conversation</h2>
-          <p>Ask me anything — I'm powered by LangChain &amp; GPT-4o Mini</p>
+          <p>Ask me anything — I'm powered by LangChain &amp; Groq ⚡</p>
           <div class="suggestion-grid">
             <button class="suggestion-chip" data-msg="Explain quantum computing in simple terms" id="suggestion1">
               <span>🔬</span> Explain quantum computing
@@ -156,7 +156,7 @@
             </svg>
           </button>
         </div>
-        <p class="input-hint">No memory — each message is independent · Press <kbd>Enter</kbd> to send</p>
+        <p class="input-hint">No memory · Groq ultra-fast inference · Press <kbd>Enter</kbd> to send · <span id="tokenCount"></span></p>
       </footer>
     </main>
   </div>
